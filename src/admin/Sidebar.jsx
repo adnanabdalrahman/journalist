@@ -8,7 +8,7 @@ const Sidebar = () => {
       <nav>
         <NavLink to="/admin">Dashbard</NavLink>
         <NavLink to="/admin/posts">Posts</NavLink>
-        <NavLink to="/admin/new">Create Post</NavLink>
+        <NavLink to="/admin/posts/new">Create Post</NavLink>
       </nav>
     </aside>
   );

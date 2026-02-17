@@ -1,6 +1,7 @@
 import "../assets/style/posts.css";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { getPosts } from "../services/postServices";
 
 const Posts = () => {
   const [posts, setPosts] = useState([]);
@@ -24,12 +25,8 @@ const Posts = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:3000/posts");
-        if (!response.ok) {
-          throw new Error("somtehing went wrong");
-        }
-        const result = await response.json();
-        setPosts(result);
+        const data = await getPosts();
+        setPosts(data);
       } catch (error) {
         console.log(error);
       } finally {

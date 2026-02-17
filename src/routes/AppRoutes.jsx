@@ -5,9 +5,11 @@ import MainLayout from "../layouts/MainLayout";
 import PostDetails from "../pages/PostDetails";
 import Posts from "../pages/Posts";
 import { Routes, Route } from "react-router-dom";
-import AdminLayout from "../layouts/AdminLayout copy";
+import AdminLayout from "../layouts/AdminLayout";
 import Dashboard from "../admin/Dashboard";
 import AdminPosts from "../admin/AdminPosts";
+import CreatePost from "../admin/CreatePost";
+import UpdatePost from "../admin/UpdatePost";
 
 const AppRoutes = () => {
   return (
@@ -25,10 +27,10 @@ const AppRoutes = () => {
 
       <Route path="admin" element={<AdminLayout />}>
         <Route index element={<Dashboard />} />
-
         <Route path="posts">
           <Route index element={<AdminPosts />} />
-          <Route path=":postId" element={<PostDetails />} />
+          <Route path=":postId/edit" element={<UpdatePost />} />
+          <Route path="new" element={<CreatePost />} />
         </Route>
       </Route>
     </Routes>
