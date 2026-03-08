@@ -7,7 +7,7 @@ const UpdatePost = () => {
   const { postId } = useParams();
   const [post, setPost] = useState({
     title: "",
-    shortContent: "",
+    short_content: "",
     content: "",
     url: "",
   });
@@ -66,10 +66,10 @@ const UpdatePost = () => {
             <div className="mb-3">
               <label className="form-label">Short Content</label>
               <input
-                name="shortContent"
+                name="short_content"
                 className="form-control"
                 placeholder="Enter Short Content"
-                value={post.shortContent}
+                value={post.short_content}
                 onChange={handleChange}
                 required
               />

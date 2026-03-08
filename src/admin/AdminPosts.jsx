@@ -62,7 +62,7 @@ const AdminPosts = () => {
             <img src={post.url} alt="Post image" />
             <div className="post-content">
               <h3>{post.title}</h3>
-              <p>{post.shortContent}</p>
+              <p>{post.short_content }</p>
               <Link to={`${post.id}/edit`} className="read-more">
                 Edit
               </Link>

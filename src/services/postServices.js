@@ -1,36 +1,25 @@
 const BASEURL = "http://localhost:3000/posts";
+import axios from "axios";
 
 // get posts
 export const getPosts = async () => {
-  const response = await fetch(BASEURL);
-  if (!response.ok) {
-    throw new Error("somtehing went wrong");
-  }
-  return response.json();
+  const response = await axios.get(BASEURL);
+  return response.data;
 };
 
 // get one Post
 export const getPost = async (id) => {
-  const response = await fetch(`${BASEURL}/${id}`);
-  if (!response.ok) {
-    throw new Error("somtehing wen wrong");
-  }
-  return response.json();
+  const response = await axios.get(`${BASEURL}/${id}`);
+  return response.data;
 };
 
 //update Post
 export const updatePost = async (id, post) => {
   try {
-    const res = await fetch(`${BASEURL}/${id}`, {
-      method: "PUT",
+    const res = await axios.put(`${BASEURL}/${id}`, post, {
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(post),
     });
-
-    if (!res.ok) {
-      throw new Error("somtehing went wrong");
-    }
-    return res.json();
+    return res.data;
   } catch (error) {
     console.log(error);
   }
@@ -39,15 +28,9 @@ export const updatePost = async (id, post) => {
 // create Post
 export const createPost = async (post) => {
   try {
-    const res = await fetch(BASEURL, {
-      method: "POST",
+    await axios.post(BASEURL, post, {
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(post),
     });
-
-    if (!res.ok) {
-      throw new Error("somtehing went wrong");
-    }
   } catch (error) {
     console.log(error);
   }
@@ -55,10 +38,5 @@ export const createPost = async (post) => {
 
 // delete Post
 export const deletePost = async (id) => {
-  const response = await fetch(`${BASEURL}/${id}`, {
-    method: "DELETE",
-  });
-  if (!response.ok) {
-    throw new Error("somtehing went wrong");
-  }
+  await axios.delete(`${BASEURL}/${id}`);
 };
