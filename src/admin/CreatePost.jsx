@@ -6,10 +6,10 @@ const CreatePost = () => {
   const navigate = useNavigate();
   const [post, setPost] = useState({
     title: "",
-    shortContent: "",
+    short_content: "",
     content: "",
-    url: "",
   });
+  const [image, setImage] = useState(null);
 
   const handleChange = (e) => {
     setPost({ ...post, [e.target.name]: e.target.value });
@@ -17,7 +17,19 @@ const CreatePost = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await createPost(post);
+
+    const formData = new FormData();
+
+    formData.append("title", post.title);
+    formData.append("short_content", post.short_content);
+    formData.append("content", post.content);
+
+    if (image) {
+      formData.append("image", image);
+    }
+    const token = localStorage.getItem("token");
+    await createPost(formData, token);
+
     navigate("/admin/posts");
   };
 
@@ -43,10 +55,10 @@ const CreatePost = () => {
               <div className="mb-3">
                 <label className="form-label">Short Content</label>
                 <input
-                  name="shortContent"
+                  name="short_content"
                   className="form-control"
                   placeholder="Enter Short Content"
-                  value={post.shortContent}
+                  value={post.short_content}
                   onChange={handleChange}
                   required
                 />
@@ -65,16 +77,26 @@ const CreatePost = () => {
                   required
                 />
               </div>
+              {/* Image preview */}
+              {image && (
+                <div className="text-center mb-3">
+                  <img
+                    src={URL.createObjectURL(image)}
+                    alt="Preview"
+                    className="img-fluid rounded"
+                    style={{ maxHeight: "250px" }}
+                  />
+                </div>
+              )}
 
-              {/* Image URL */}
+              {/* Upload image */}
               <div className="mb-3">
-                <label className="form-label">Image URL</label>
+                <label className="form-label">Upload Image</label>
                 <input
-                  name="url"
+                  type="file"
                   className="form-control"
-                  placeholder="https://..."
-                  value={post.url}
-                  onChange={handleChange}
+                  accept="image/*"
+                  onChange={(e) => setImage(e.target.files[0])}
                 />
               </div>
 
@@ -96,7 +118,6 @@ const CreatePost = () => {
           </div>
         </div>
       </div>
-      ;
     </>
   );
 };

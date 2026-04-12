@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-
+import { useAuth } from "../hooks/useAuth";
 const Header = () => {
   const styleHeader = {
     display: "flex",
@@ -21,7 +21,8 @@ const Header = () => {
     gap: "15px",
   };
 
-  const login = true;
+  const { user, logout } = useAuth();
+
   return (
     <header style={styleHeader} className="nav-links ">
       <div className="logo">MySite</div>
@@ -42,17 +43,15 @@ const Header = () => {
         </ul>
       </nav>
 
-      {!login && (
+      {!user ? (
         <div style={styleAuth}>
           <NavLink to="/login">Login</NavLink>
           <NavLink to="/register">Register</NavLink>
         </div>
-      )}
-
-      {login && (
+      ) : (
         <div style={styleAuth}>
-          <NavLink to="/logout">Logout</NavLink>
-          <NavLink to="/admin">Admin</NavLink>
+          <span>{user.name}</span>
+          <button onClick={logout}>Logout</button>
         </div>
       )}
     </header>

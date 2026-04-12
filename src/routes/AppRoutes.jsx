@@ -10,7 +10,9 @@ import Dashboard from "../admin/Dashboard";
 import AdminPosts from "../admin/AdminPosts";
 import CreatePost from "../admin/CreatePost";
 import UpdatePost from "../admin/UpdatePost";
-
+import Login from "../pages/login";
+import Register from "../pages/register";
+import ProtectedRoute from "./ProtectedRoute";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -23,14 +25,18 @@ const AppRoutes = () => {
           <Route index element={<Posts />} />
           <Route path=":postId" element={<PostDetails />} />
         </Route>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Route>
 
-      <Route path="admin" element={<AdminLayout />}>
-        <Route index element={<Dashboard />} />
-        <Route path="posts">
-          <Route index element={<AdminPosts />} />
-          <Route path=":postId/edit" element={<UpdatePost />} />
-          <Route path="new" element={<CreatePost />} />
+      <Route element={<ProtectedRoute />}>
+        <Route path="admin" element={<AdminLayout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="posts">
+            <Route index element={<AdminPosts />} />
+            <Route path=":postId/edit" element={<UpdatePost />} />
+            <Route path="new" element={<CreatePost />} />
+          </Route>
         </Route>
       </Route>
     </Routes>

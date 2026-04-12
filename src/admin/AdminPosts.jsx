@@ -45,7 +45,8 @@ const AdminPosts = () => {
 
     if (!confirmDelete) return;
     try {
-      await deletePost(id);
+      const token = localStorage.getItem("token");
+      await deletePost(id, token);
       setPosts((prev) => prev.filter((post) => post.id != id));
     } catch (error) {
       console.log("ERROR", error);
@@ -59,10 +60,15 @@ const AdminPosts = () => {
       <section className="posts">
         {posts.map((post) => (
           <div key={post.id} className="post-card">
-            <img src={post.url} alt="Post image" />
+            <img
+              src={
+                post.url ? `http://localhost:3000${post.url}` : "/no-image.png"
+              }
+              alt="Post image"
+            />
             <div className="post-content">
               <h3>{post.title}</h3>
-              <p>{post.shortContent}</p>
+              <p>{post.short_content}</p>
               <Link to={`${post.id}/edit`} className="read-more">
                 Edit
               </Link>

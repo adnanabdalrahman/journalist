@@ -7,11 +7,11 @@ const UpdatePost = () => {
   const { postId } = useParams();
   const [post, setPost] = useState({
     title: "",
-    shortContent: "",
+    short_content: "",
     content: "",
     url: "",
   });
-
+  const [image, setImage] = useState(null);
   useEffect(() => {
     const loadPost = async () => {
       try {
@@ -31,7 +31,19 @@ const UpdatePost = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await updatePost(postId, post);
+
+    const formData = new FormData();
+
+    formData.append("title", post.title);
+    formData.append("short_content", post.short_content);
+    formData.append("content", post.content);
+
+    if (image) {
+      formData.append("image", image);
+    }
+    const token = localStorage.getItem("token");
+    await updatePost(postId, formData, token);
+
     navigate("/admin/posts");
   };
 
@@ -66,10 +78,10 @@ const UpdatePost = () => {
             <div className="mb-3">
               <label className="form-label">Short Content</label>
               <input
-                name="shortContent"
+                name="short_content"
                 className="form-control"
                 placeholder="Enter Short Content"
-                value={post.shortContent}
+                value={post.short_content}
                 onChange={handleChange}
                 required
               />
@@ -87,15 +99,34 @@ const UpdatePost = () => {
               />
             </div>
 
-            <div className="mb-3">
-              <label className="form-label">Image URL</label>
-              <input
-                name="url"
-                className="form-control"
-                value={post.url}
-                onChange={handleChange}
-              />
-            </div>
+            {image ? (
+              <div className="text-center mb-3">
+                <img
+                  src={URL.createObjectURL(image)}
+                  alt="Preview"
+                  className="img-fluid rounded"
+                  style={{ maxHeight: "250px" }}
+                />
+              </div>
+            ) : (
+              post.url && (
+                <div className="text-center mb-3">
+                  <img
+                    src={`http://localhost:3000${post.url}`}
+                    alt="Preview"
+                    className="img-fluid rounded"
+                    style={{ maxHeight: "250px" }}
+                  />
+                </div>
+              )
+            )}
+            <label className="form-label">Upload Image</label>
+            <input
+              type="file"
+              className="form-control"
+              accept="image/*"
+              onChange={(e) => setImage(e.target.files[0])}
+            />
 
             <div className="d-flex justify-content-between">
               <button
