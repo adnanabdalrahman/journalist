@@ -7,7 +7,7 @@ const Posts = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   // useEffect(() => {
-  //   fetch("http://localhost:3000/posts")
+  //   fetch(import.meta.env.VITE_API_URL + "/posts")
   //     .then((response) => {
   //       if (!response.ok) {
   //         throw new Error("somtehing went wrong");

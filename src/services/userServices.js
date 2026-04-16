@@ -1,4 +1,4 @@
-const BASEURL = "http://localhost:3000/users";
+const BASEURL = import.meta.env.VITE_API_URL + "/users";
 
 // get users
 export const getUsers = async () => {
