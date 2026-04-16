@@ -25,7 +25,7 @@ const Header = () => {
 
   return (
     <header style={styleHeader} className="nav-links ">
-      <div className="logo">MySite</div>
+      <div className="logo">Journal</div>
       <nav>
         <ul style={styleUl}>
           <li>
